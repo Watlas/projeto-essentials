@@ -2,18 +2,19 @@ package com.watlas.projetoessentials.domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.Valid;
 
-@Entity
+@Entity(name = "ANIME")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class AnimeDomain {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String nome;
+    private String name;
 
 }

@@ -1,0 +1,13 @@
+package com.watlas.projetoessentials.requests;
+
+import lombok.Data;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+@Data
+public class AnimePostRequestBody {
+    @NotEmpty(message = "this anime name cannot be empty")
+    @NotNull
+    private String name;
+}
