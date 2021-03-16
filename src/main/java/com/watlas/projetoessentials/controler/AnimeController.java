@@ -6,6 +6,8 @@ import com.watlas.projetoessentials.requests.AnimePutRequestBody;
 import com.watlas.projetoessentials.service.AnimeService;
 import com.watlas.projetoessentials.util.DateUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +23,13 @@ public class AnimeController {
     private final DateUtil dateUtil;
     private final AnimeService animeService;
 
+//    @GetMapping
+//    public ResponseEntity<Page<AnimeDomain>> list(Pageable pageable){
+//        return ResponseEntity.ok(animeService.listAll(pageable)); //animes?size=5&page=2 - 2 pode mudar
+//    }
     @GetMapping
     public ResponseEntity<List<AnimeDomain>> list(){
-        List<AnimeDomain> list = animeService.listAll();
-
-        return ResponseEntity.status(HttpStatus.OK).body(list);
+        return ResponseEntity.ok(animeService.listAll());
     }
 
     @GetMapping("/{id}")

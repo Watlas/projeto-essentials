@@ -2,15 +2,13 @@ package com.watlas.projetoessentials.exception;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
-@Data
-@Builder
-public class BadResquestExceptionDetails {
-    private String title;
-    private int status;
-    private String details;
-    private String developerMessage;
-    private LocalDateTime timestamp;
+@SuperBuilder
+@Getter
+public class BadResquestExceptionDetails extends ExceptionDetails{
+
 }

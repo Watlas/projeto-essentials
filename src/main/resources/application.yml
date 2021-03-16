@@ -8,6 +8,8 @@ spring:
     password: root
     username: root
   jpa:
-    hibernate:
-      ddl-auto: update
-
+    properties:
+     hibernate:
+       show_sql: true
+       format_sql: true
+       ddl-auto: update

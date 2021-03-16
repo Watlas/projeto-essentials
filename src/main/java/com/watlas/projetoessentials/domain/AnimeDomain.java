@@ -4,8 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 
-@Entity(name = "ANIME")
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,6 +16,8 @@ public class AnimeDomain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "the anime name cannot be empty")
     private String name;
+
 
 }
