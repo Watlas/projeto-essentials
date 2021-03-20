@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+scrape_configs:
+  - job_name: 'Projeto Anime'
+    scrape_interval: 5s
+    metrics_path: '/actuator/prometheus'  #caminho para URL
+    static_configs:
+      - targets: ['192.168.0.109:8080']  #Seu IP

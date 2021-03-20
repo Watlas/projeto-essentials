@@ -6,7 +6,6 @@ import com.watlas.projetoessentials.requests.AnimePutRequestBody;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import java.io.Serializable;
 
 @Mapper(componentModel = "spring")
 public abstract class AnimeMapper {

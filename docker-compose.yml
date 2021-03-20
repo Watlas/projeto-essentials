@@ -1,5 +1,8 @@
-version: "3.1"
-
+version: "2.4"
+  x-database-variables: &database-variables
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/anime?createDatabaseIfNotExist=true
+  SPRING_DATASOURCE_PASSWORD: root
+  SPRING_DATASOURCE_USERNAME: root
 services:
   db:
     image: mysql
@@ -10,6 +13,29 @@ services:
       - "3306:3306"
     volumes:
       - watlas_data:/var/lib/mysql
+    mem_limit: 512m
+  prometheus:
+      image: prom/prometheus
+      ports:
+        - "9090:9090"
+      volumes:
+        - ./src/main/resources/prometheus.yml:/etc/prometheus/prometheus.yml
+      command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+      mem_limit: 128m
+  grafana:
+    image: grafana/grafana:latest
+    container_name: monitoring_grafana
+    ports:
+    - "3000:3000"
+    mem_limit: 128m
+
+  spring-project:
+    image: registry.hub.docker.com/watlas/spring-project:0.0.1-SNAPSHOT
+    ports:
+    - 8080:8080
+    environment:
+      <<: *database-variables
+    mem_limit: 2000m
 
 volumes:
   watlas_data:

@@ -25,10 +25,10 @@ public class AnimeService {
 
     private final AnimeMapper animeMapper;
 
-//    public Page<AnimeDomain> listAll(Pageable pageable) {
-//        return repository.findAll(pageable);
-//
-//    }
+    public Page<AnimeDomain> listAll(Pageable pageable) {
+        return repository.findAll(pageable);
+
+    }
     public List<AnimeDomain> listAll() {
         return repository.findAll();
 

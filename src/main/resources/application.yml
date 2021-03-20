@@ -1,6 +1,4 @@
-server:
-  error:
-    include-stacktrace: on_param
+
 
 spring:
   datasource:
@@ -8,8 +6,22 @@ spring:
     password: root
     username: root
   jpa:
-    properties:
-     hibernate:
-       show_sql: true
-       format_sql: true
-       ddl-auto: update
+    hibernate:
+      ddl-auto: update
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoint:
+    metrics:
+      enabled: false
+    prometheus:
+      enabled: true
+info:
+  app: Spring boot watlas
+  github: github.com/watlas
