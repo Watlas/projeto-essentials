@@ -43,9 +43,15 @@ public class AnimeController {
         return ResponseEntity.ok(animeService.listAll());
     }
 
-    @GetMapping("/{id}")
-  //  @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<AnimeDomain> findById(@PathVariable Long id){
+//    @GetMapping("/{id}")
+//  //  @PreAuthorize("hasRole('USER')")
+//    public ResponseEntity<AnimeDomain> findById(@PathVariable Long id){
+//        return ResponseEntity.ok(animeService.findByIdOrThrowRequestException(id));
+//    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<AnimeDomain> findById(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+        log.info("User logged in {}", userDetails);
         return ResponseEntity.ok(animeService.findByIdOrThrowRequestException(id));
     }
 
@@ -73,11 +79,11 @@ public class AnimeController {
         return ResponseEntity.noContent().build();
     }
     //usando DTO
-    @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody obj){
-        animeService.replace(obj);
-        return ResponseEntity.noContent().build();
-    }
+//    @PutMapping
+//    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody obj){
+//        animeService.replace(obj);
+//        return ResponseEntity.noContent().build();
+//    }
     @PutMapping
     public ResponseEntity<Void> replace(@RequestBody AnimeDomain obj){
         animeService.replace(obj);

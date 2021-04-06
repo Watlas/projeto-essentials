@@ -18,27 +18,38 @@ public class SegurityConfig extends WebSecurityConfigurerAdapter {
 
     private final WatlasUserService watlasUserService;
 
+    /***
+     * BasicAuthenticationFilter
+     * UsernamePasswordAuthenticationFilter
+     * DefaultLoginPageGeneratingFilter
+     * DefaultLogoutPageGeneratingFilter
+     * FilterSecurityInterceptor
+     * Authentication -> Authorization
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                //.csrf().disable()  //desabilita o token para fazer post
-                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()//habilita o token para fazer post
+        //@formatter:off
+        http.csrf()
+                .disable()
+//            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//            .and()
                 .authorizeRequests()
-                .antMatchers("/animes/admin/**").hasRole("ADMIN")  //proteger a URL desejada
+                .antMatchers("/animes/admin/**").hasRole("ADMIN")
                 .antMatchers("/animes/**").hasRole("USER")
                 .antMatchers("/actuator/**").permitAll()
-                .anyRequest()
-                .authenticated()
+                .anyRequest().authenticated()
                 .and()
-                .formLogin() //tela de login
+                .formLogin()
                 .and()
                 .httpBasic();
+        //@formatter:on
     }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder p = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-       log.info("Password enconded {}", p.encode("test"));
+        log.info("Password enconded {}", p.encode("test"));
         auth.inMemoryAuthentication()
                 .withUser("watlas2")
                 .password(p.encode("watlas2"))

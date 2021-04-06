@@ -64,7 +64,7 @@ public class AnimeService {
 
     }
     public void replace(AnimeDomain animePutRequestBody) {
-        AnimeDomain savedAnime = findByIdOrThrowRequestException(animePutRequestBody.getId());
+
 
         repository.save(animePutRequestBody);
 
