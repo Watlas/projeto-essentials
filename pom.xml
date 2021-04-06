@@ -14,7 +14,7 @@
     <name>projeto-essentials</name>
     <description>Demo project for Spring Boot</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>13</java.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <jib-maven-plugin.version>2.8.0</jib-maven-plugin.version>
         <docker-distrolles.image>gcr.io/distroless/java:11</docker-distrolles.image>
@@ -122,6 +122,16 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
 
 

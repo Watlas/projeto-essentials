@@ -46,6 +46,10 @@ public class AnimeService {
         return repository.save(animeMapper.toAnimeDomain(animePostRequestBody));
        // return repository.save(AnimeDomain.builder().name(animePostRequestBody.getName()).build());
     }
+    public AnimeDomain save(AnimeDomain animePostRequestBody) {
+        return repository.save(animePostRequestBody);
+       // return repository.save(AnimeDomain.builder().name(animePostRequestBody.getName()).build());
+    }
 
     public void delete(Long id) {
         repository.deleteById(id);
@@ -57,6 +61,12 @@ public class AnimeService {
      //   AnimeDomain animeDomain = AnimeDomain.builder().name(animePutRequestBody.getName()).build();
         animeDomain.setId(savedAnime.getId());
         repository.save(animeDomain);
+
+    }
+    public void replace(AnimeDomain animePutRequestBody) {
+        AnimeDomain savedAnime = findByIdOrThrowRequestException(animePutRequestBody.getId());
+
+        repository.save(animePutRequestBody);
 
     }
 }

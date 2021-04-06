@@ -2,96 +2,96 @@ package com.watlas.projetoessentials.repository;
 
 import com.watlas.projetoessentials.domain.AnimeDomain;
 import com.watlas.projetoessentials.util.AnimeCreator;
+import com.watlas.projetoessentials.util.DateUtil;
+import java.util.List;
+import java.util.Optional;
+import javax.validation.ConstraintViolationException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import javax.validation.ConstraintViolationException;
-import java.util.List;
-import java.util.Optional;
-
+//@ExtendWith(SpringExtension.class)
 @DataJpaTest
-@DisplayName("teste for anime repository")
+@DisplayName("Anime Repository Tests")
+//@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class AnimeRepositoryTest {
 
     @Autowired
     private AnimeRepository animeRepository;
 
     @Test
-    @DisplayName("save persisters anime when successful")
-    void save_persistAnime_whenSucessful(){
-        AnimeDomain animeTobeSaved =  AnimeCreator.createAnimToSavede();
+    @DisplayName("Save creates anime when successful")
+    public void save_PersistAnime_WhenSuccessful() {
+        AnimeDomain anime = AnimeCreator.createAnimeToBeSaved();
 
-        AnimeDomain animeSaved = this.animeRepository.save(animeTobeSaved);
-
-        Assertions.assertThat(animeSaved).isNull();
-
-        Assertions.assertThat(animeSaved.getId()).isNotNull();
-
-        Assertions.assertThat(animeSaved.getName()).isEqualTo(animeTobeSaved.getName());
+        AnimeDomain savedAnime = this.animeRepository.save(anime);
+        Assertions.assertThat(savedAnime.getId()).isNotNull();
+        Assertions.assertThat(savedAnime.getName()).isNotNull();
+        Assertions.assertThat(savedAnime.getName()).isEqualTo(anime.getName());
 
     }
 
     @Test
-    @DisplayName("save creates anume when successful")
-    void save_UpdatepersistAnime_whenSucessful(){
-        AnimeDomain animeTobeSaved = AnimeCreator.createAnimToSavede();
+    @DisplayName("Save updates anime when successful")
+    public void save_UpdateAnime_WhenSuccessful() {
+        AnimeDomain anime = AnimeCreator.createAnimeToBeSaved();
 
-        AnimeDomain animeSaved = this.animeRepository.save(animeTobeSaved);
+        AnimeDomain savedAnime = this.animeRepository.save(anime);
 
-        animeSaved.setName("passou no upload");
+        savedAnime.setName("That time I got reincarnated as a slime");
 
-        AnimeDomain animeUpdate = this.animeRepository.save(animeSaved);
+        AnimeDomain updatedAnime = this.animeRepository.save(savedAnime);
 
-        Assertions.assertThat(animeUpdate).isNotNull();
-
-        Assertions.assertThat(animeUpdate.getId()).isNotNull();
-
-        Assertions.assertThat(animeUpdate.getName()).isEqualTo(animeTobeSaved.getName());
+        Assertions.assertThat(savedAnime.getId()).isNotNull();
+        Assertions.assertThat(savedAnime.getName()).isNotNull();
+        Assertions.assertThat(savedAnime.getName()).isEqualTo(updatedAnime.getName());
 
     }
 
     @Test
-    @DisplayName("delete persisters anime when successful")
-    void delete_RemoveAnime_whenSucessful(){
-        AnimeDomain animeTobeSaved =  AnimeCreator.createAnimToSavede();
-        AnimeDomain animeSaved = this.animeRepository.save(animeTobeSaved);
+    @DisplayName("Delete removes anime when successful")
+    public void delete_RemoveAnime_WhenSuccessful() {
+        AnimeDomain anime = AnimeCreator.createAnimeToBeSaved();
 
-        this.animeRepository.delete(animeSaved);
+        AnimeDomain savedAnime = this.animeRepository.save(anime);
 
-        Optional<AnimeDomain> optional = this.animeRepository.findById(animeSaved.getId());
+        this.animeRepository.delete(anime);
 
-        Assertions.assertThat(optional).isEmpty();
+        Optional<AnimeDomain> animeOptional = this.animeRepository.findById(savedAnime.getId());
 
-    }
-
-    @Test
-    @DisplayName("find by name returns sucessfulsuccessful")
-    void findByName_persistAnime_whenSucessful(){
-        AnimeDomain animeTobeSaved =  AnimeCreator.createAnimToSavede();
-
-        AnimeDomain animeSaved = this.animeRepository.save(animeTobeSaved);
-
-        String name = animeSaved.getName();
-
-        List<AnimeDomain> animes = this.animeRepository.findByName(name);
-
-        Assertions.assertThat(animes).isNotEmpty().contains(animeSaved);
-
-        Assertions.assertThat(animes).contains(animeSaved);
+        Assertions.assertThat(animeOptional.isEmpty()).isTrue();
 
     }
 
     @Test
-    @DisplayName("save throw ContraintValidationException when name is empty")
-    void save_throwException_whenSucessful(){
-      AnimeDomain anime = new AnimeDomain();
-      Assertions.assertThatThrownBy(() -> this.animeRepository.save(anime)).isInstanceOf(ConstraintViolationException.class);
+    @DisplayName("Find by name returns anime when successful")
+    public void findByName_ReturnAnimes_WhenSuccessful() {
+        AnimeDomain anime = AnimeCreator.createAnimeToBeSaved();
 
+        AnimeDomain savedAnime = this.animeRepository.save(anime);
+
+        String name = savedAnime.getName();
+
+        List<AnimeDomain> animeList = this.animeRepository.findByName(name);
+
+        Assertions.assertThat(animeList).isNotEmpty();
+
+        Assertions.assertThat(animeList).contains(savedAnime);
 
     }
 
+    @Test
+    @DisplayName("Find by name returns empty list when no anime is found")
+    public void findByName_ReturnEmptyList_WhenAnimeNotFound() {
+        String name = "fake-name";
 
+        List<AnimeDomain> animeList = this.animeRepository.findByName(name);
+
+        Assertions.assertThat(animeList).isEmpty();
+    }
+
+
+    
 }

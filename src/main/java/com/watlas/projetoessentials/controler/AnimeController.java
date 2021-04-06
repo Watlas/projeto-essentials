@@ -72,8 +72,14 @@ public class AnimeController {
         animeService.delete(id);
         return ResponseEntity.noContent().build();
     }
+    //usando DTO
     @PutMapping
     public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody obj){
+        animeService.replace(obj);
+        return ResponseEntity.noContent().build();
+    }
+    @PutMapping
+    public ResponseEntity<Void> replace(@RequestBody AnimeDomain obj){
         animeService.replace(obj);
         return ResponseEntity.noContent().build();
     }
